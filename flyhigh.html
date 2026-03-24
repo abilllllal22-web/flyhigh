@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fly High — Детский образовательный центр</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A96E;
+  --gold-light: #E8CFA0;
+  --gold-pale: #F5EDD9;
+  --cream: #FAF7F2;
+  --deep: #1A1209;
+  --ink: #2C2215;
+  --muted: #8B7355;
+  --sky: #5B8FA8;
+  --sky-light: #A8CCE0;
+  --warm-white: #FFFDF9;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── LANG SWITCHER ── */
+.lang-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 14px 48px;
+  background: transparent;
+  transition: background 0.4s;
+}
+.lang-bar.scrolled {
+  background: rgba(26,18,9,0.92);
+  backdrop-filter: blur(12px);
+}
+.lang-btn {
+  background: none;
+  border: 1px solid var(--gold);
+  color: var(--gold-light);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: all 0.25s;
+  margin-left: 8px;
+}
+.lang-btn:hover, .lang-btn.active {
+  background: var(--gold);
+  color: var(--deep);
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--deep);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Animated orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+  animation: drift 12s ease-in-out infinite alternate;
+}
+.orb-1 { width: 600px; height: 600px; background: var(--gold); top: -200px; left: -200px; animation-delay: 0s; }
+.orb-2 { width: 400px; height: 400px; background: var(--sky); bottom: -100px; right: -100px; animation-delay: -4s; }
+.orb-3 { width: 300px; height: 300px; background: var(--gold-light); top: 40%; left: 60%; animation-delay: -8s; }
+
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(40px, 30px) scale(1.08); }
+}
+
+/* Stars/particles */
+.stars {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(201,169,110,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 20%, rgba(201,169,110,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 70%, rgba(201,169,110,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 80%, rgba(201,169,110,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 60%, rgba(91,143,168,0.5) 0%, transparent 100%),
+    radial-gradient(2px 2px at 35% 15%, rgba(201,169,110,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 85%, rgba(91,143,168,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 45%, rgba(201,169,110,0.5) 0%, transparent 100%);
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+@keyframes twinkle {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+.hero-inner {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 120px 24px 80px;
+}
+
+.hero-tag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  padding: 6px 20px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.3s ease forwards;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(72px, 12vw, 160px);
+  font-weight: 300;
+  line-height: 0.9;
+  color: var(--warm-white);
+  letter-spacing: -2px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.5s ease forwards;
+}
+.hero-title span {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.hero-sub {
+  font-size: clamp(13px, 2vw, 16px);
+  font-weight: 200;
+  letter-spacing: 3px;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.7s ease forwards;
+}
+
+.hero-desc {
+  max-width: 520px;
+  margin: 40px auto 0;
+  font-size: 15px;
+  line-height: 1.9;
+  color: rgba(255,253,249,0.65);
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.9s ease forwards;
+}
+
+.hero-cta {
+  display: inline-flex;
+  gap: 16px;
+  margin-top: 56px;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeUp 0.9s 1.1s ease forwards;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--deep);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 18px 44px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  transform: translateX(-100%);
+  transition: transform 0.3s;
+}
+.btn-primary:hover::after { transform: translateX(0); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--gold-light);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 18px 44px;
+  border: 1px solid rgba(201,169,110,0.4);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-block;
+}
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 0.9s 1.4s ease forwards;
+}
+.scroll-hint span {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SECTION BASE ── */
+section { position: relative; }
+
+.section-label {
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--ink);
+}
+.section-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+/* ── WHY US ── */
+.why {
+  background: var(--warm-white);
+  padding: 120px 48px;
+}
+.why-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.why-text .section-title { margin-bottom: 32px; }
+.why-text p {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+.why-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.feature-card {
+  padding: 32px 28px;
+  border-top: 2px solid var(--gold);
+  background: var(--cream);
+  transition: transform 0.3s, box-shadow 0.3s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s, transform 0.7s, box-shadow 0.3s;
+}
+.feature-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.feature-card:hover {
+  box-shadow: 0 20px 60px rgba(201,169,110,0.12);
+  transform: translateY(-4px) !important;
+}
+.feature-icon {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 20px;
+}
+.feature-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.feature-card p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+/* ── PROGRAMS ── */
+.programs {
+  background: var(--deep);
+  padding: 120px 48px;
+  overflow: hidden;
+}
+.programs-inner { max-width: 1200px; margin: 0 auto; }
+.programs .section-label { color: var(--gold); }
+.programs .section-title { color: var(--warm-white); margin-bottom: 64px; }
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.program-card {
+  background: rgba(255,253,249,0.04);
+  border: 1px solid rgba(201,169,110,0.12);
+  padding: 48px 36px;
+  cursor: pointer;
+  transition: all 0.35s;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(50px);
+}
+.program-card.visible { opacity: 1; transform: translateY(0); }
+.program-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(201,169,110,0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.program-card:hover { background: rgba(201,169,110,0.06); border-color: rgba(201,169,110,0.4); }
+.program-card:hover::before { opacity: 1; }
+.program-card:hover .program-price { color: var(--gold); }
+
+.program-num {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+.program-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 300;
+  color: var(--warm-white);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.program-card p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(255,253,249,0.45);
+  font-weight: 300;
+  margin-bottom: 32px;
+}
+.program-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  color: var(--gold-light);
+  font-weight: 300;
+  transition: color 0.3s;
+}
+.program-price span { font-size: 14px; color: var(--muted); margin-left: 6px; }
+
+/* ── REVIEWS ── */
+.reviews {
+  background: var(--cream);
+  padding: 120px 48px;
+}
+.reviews-inner { max-width: 1200px; margin: 0 auto; }
+.reviews .section-title { margin-bottom: 64px; }
+
+.reviews-track-wrap { overflow: hidden; position: relative; }
+.reviews-track {
+  display: flex;
+  gap: 24px;
+  animation: slide 30s linear infinite;
+  width: max-content;
+}
+.reviews-track:hover { animation-play-state: paused; }
+
+@keyframes slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.review-card {
+  width: 360px;
+  flex-shrink: 0;
+  background: var(--warm-white);
+  padding: 40px 36px;
+  border-bottom: 2px solid var(--gold);
+  position: relative;
+}
+.review-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  color: var(--gold-pale);
+  line-height: 0.5;
+  margin-bottom: 16px;
+  font-weight: 300;
+}
+.review-text {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+.review-author {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.stars-row {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 20px;
+}
+.star {
+  width: 10px; height: 10px;
+  background: var(--gold);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* ── GALLERY ── */
+.gallery {
+  background: var(--ink);
+  padding: 80px 0;
+  overflow: hidden;
+}
+.gallery-row {
+  display: flex;
+  gap: 16px;
+  animation: gallerySlide 20s linear infinite;
+  width: max-content;
+  margin-bottom: 16px;
+}
+.gallery-row.reverse { animation-direction: reverse; }
+@keyframes gallerySlide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.gallery-tile {
+  width: 200px;
+  height: 140px;
+  flex-shrink: 0;
+  background: rgba(255,253,249,0.06);
+  border: 1px solid rgba(201,169,110,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  color: rgba(201,169,110,0.4);
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+.gallery-tile:hover {
+  background: rgba(201,169,110,0.08);
+  border-color: rgba(201,169,110,0.3);
+  color: var(--gold);
+}
+
+/* ── ABOUT / TEAM SPIRIT ── */
+.about {
+  background: var(--warm-white);
+  padding: 120px 48px;
+}
+.about-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 100px;
+  align-items: center;
+}
+.about-visual {
+  position: relative;
+}
+.about-frame {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--deep);
+  position: relative;
+  overflow: hidden;
+}
+.about-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(201,169,110,0.15) 0%, rgba(91,143,168,0.1) 100%);
+}
+.about-frame-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+.about-frame-inner svg { opacity: 0.2; }
+.about-accent {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 160px;
+  height: 160px;
+  border: 1px solid var(--gold);
+  z-index: -1;
+}
+.about-accent-2 {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 80px;
+  height: 80px;
+  background: var(--gold);
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.about-text .section-title { margin-bottom: 32px; }
+.about-text p {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+.about-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 48px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(201,169,110,0.2);
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* ── CONTACT ── */
+.contact {
+  background: var(--deep);
+  padding: 120px 48px;
+}
+.contact-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 100px;
+  align-items: start;
+}
+.contact .section-title { color: var(--warm-white); margin-bottom: 48px; }
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form-field label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.form-field input,
+.form-field textarea,
+.form-field select {
+  background: rgba(255,253,249,0.05);
+  border: 1px solid rgba(201,169,110,0.2);
+  color: var(--warm-white);
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 14px 18px;
+  outline: none;
+  transition: border-color 0.25s;
+  -webkit-appearance: none;
+}
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus { border-color: var(--gold); }
+.form-field textarea { min-height: 120px; resize: none; }
+.form-field select option { background: var(--deep); }
+.form-submit {
+  width: 100%;
+  background: var(--gold);
+  color: var(--deep);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 20px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.form-submit:hover { background: var(--gold-light); }
+
+.contact-info { padding-top: 8px; }
+.contact-info .section-label { margin-bottom: 40px; }
+.info-block {
+  margin-bottom: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(201,169,110,0.1);
+}
+.info-block:last-child { border-bottom: none; }
+.info-block-label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.info-block-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: var(--warm-white);
+  line-height: 1.6;
+  font-weight: 300;
+}
+.info-block-value a {
+  color: var(--gold-light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.info-block-value a:hover { color: var(--gold); }
+
+.social-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid rgba(201,169,110,0.25);
+  color: var(--gold-light);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.social-btn:hover { border-color: var(--gold); background: rgba(201,169,110,0.06); }
+
+/* ── FOOTER ── */
+footer {
+  background: #120D04;
+  padding: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--warm-white);
+  letter-spacing: 1px;
+}
+.footer-logo span { color: var(--gold); font-style: italic; }
+.footer-copy {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+/* ── ANIMATIONS ── */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .why-grid, .about-inner, .contact-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .programs-grid { grid-template-columns: 1fr; }
+  .why-features { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .about-visual { display: none; }
+  .about-stats { gap: 32px; }
+  footer { flex-direction: column; text-align: center; }
+  .lang-bar { padding: 14px 24px; }
+}
+
+/* LANGUAGE TOGGLE */
+.lang-ru .kk, .lang-kk .ru { display: none; }
+.lang-ru .ru, .lang-kk .kk { display: block; }
+.lang-ru .ru-inline, .lang-kk .kk-inline { display: inline; }
+.lang-ru .kk-inline, .lang-kk .ru-inline { display: none; }
+</style>
+</head>
+<body class="lang-ru">
+
+<!-- LANG BAR -->
+<div class="lang-bar" id="langBar">
+  <button class="lang-btn active" id="btnRu" onclick="setLang('ru')">RU</button>
+  <button class="lang-btn" id="btnKk" onclick="setLang('kk')">KZ</button>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="stars"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <span class="ru-inline">Образовательный центр · Астана</span>
+      <span class="kk-inline">Білім беру орталығы · Астана</span>
+    </div>
+
+    <h1 class="hero-title">Fly <span>High</span></h1>
+
+    <p class="hero-sub">
+      <span class="ru-inline">Расти. Учись. Вдохновляйся</span>
+      <span class="kk-inline">Өс. Үйрен. Шабыттан</span>
+    </p>
+
+    <p class="hero-desc ru">
+      Место, где каждый ребёнок раскрывает свой потенциал. Внимательные педагоги, тёплая атмосфера и программы, которые меняют жизнь.
+    </p>
+    <p class="hero-desc kk">
+      Әр бала өз мүмкіндігін ашатын орын. Зейінді ұстаздар, жылы атмосфера және өмірді өзгертетін бағдарламалар.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary ru">Записаться сейчас</a>
+      <a href="#contact" class="btn-primary kk">Қазір жазылу</a>
+      <a href="#programs" class="btn-outline ru">Наши программы</a>
+      <a href="#programs" class="btn-outline kk">Біздің бағдарламалар</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="ru-inline">прокрутите вниз</span>
+    <span class="kk-inline">төмен айналдырыңыз</span>
+  </div>
+</section>
+
+<!-- ══ WHY US ══ -->
+<section class="why">
+  <div class="why-grid">
+    <div class="why-text fade-in-up">
+      <div class="section-label">
+        <span class="ru-inline">Почему Fly High</span>
+        <span class="kk-inline">Неге Fly High</span>
+      </div>
+      <h2 class="section-title">
+        <span class="ru">Место, где дети <em>хотят учиться</em></span>
+        <span class="kk">Балалар <em>үйренгісі келетін</em> орын</span>
+      </h2>
+      <p class="ru">Каждый ребёнок — уникальная личность. Мы строим занятия вокруг его темпа, интересов и сильных сторон, создавая среду, где учёба становится радостью.</p>
+      <p class="kk">Әр бала — өзіндік тұлға. Біз сабақтарды оның қарқынына, қызығушылықтарына және күшті жақтарына негіздейміз.</p>
+      <p class="ru" style="margin-top:8px">Родители замечают первые результаты уже через 2–3 недели. Дети возвращаются домой в отличном настроении — и это говорит само за себя.</p>
+      <p class="kk" style="margin-top:8px">Ата-аналар алғашқы нәтижелерді 2–3 апта ішінде байқайды. Балалар үйге жақсы көңіл-күймен оралады.</p>
+    </div>
+
+    <div class="why-features">
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" stroke="#C9A96E" stroke-width="1.5"/>
+          <path d="M12 18l4 4 8-8" stroke="#C9A96E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="ru">Индивидуальный подход</h3>
+        <h3 class="kk">Жеке тәсіл</h3>
+        <p class="ru">Педагоги находят ключ к каждому ребёнку, учитывая его темперамент и уровень</p>
+        <p class="kk">Ұстаздар әр баланың мінезі мен деңгейін ескере отырып, оған жол табады</p>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 36 36" fill="none">
+          <rect x="2" y="2" width="32" height="32" rx="2" stroke="#C9A96E" stroke-width="1.5"/>
+          <path d="M10 18h16M18 10v16" stroke="#C9A96E" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h3 class="ru">Широкий выбор программ</h3>
+        <h3 class="kk">Бағдарламалардың кең таңдауы</h3>
+        <p class="ru">От подготовки к школе до творческих мастерклассов и домбры для всей семьи</p>
+        <p class="kk">Мектепке дайындықтан бастап бүкіл отбасына арналған шығармашылық шеберханаларға дейін</p>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 36 36" fill="none">
+          <path d="M18 4C10.3 4 4 10.3 4 18s6.3 14 14 14 14-6.3 14-14S25.7 4 18 4z" stroke="#C9A96E" stroke-width="1.5"/>
+          <path d="M18 12v6l4 2" stroke="#C9A96E" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h3 class="ru">Продлёнка с заботой</h3>
+        <h3 class="kk">Күзетпен ұзартылған топ</h3>
+        <p class="ru">Комфортная среда после школы: уютно, безопасно, с вниманием к каждому</p>
+        <p class="kk">Мектептен кейін жайлы орта: ыстық, қауіпсіз, әрқайсысына назар аударылады</p>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 36 36" fill="none">
+          <path d="M18 4l3.5 7 7.5 1.1-5.5 5.3 1.3 7.6L18 22l-6.8 3 1.3-7.6L7 12.1l7.5-1.1L18 4z" stroke="#C9A96E" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="ru">Профессионализм</h3>
+        <h3 class="kk">Кәсібилік</h3>
+        <p class="ru">Педагоги — настоящие мастера своего дела с большой буквы</p>
+        <p class="kk">Ұстаздар — өз ісінің шынайы шеберлері</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROGRAMS ══ -->
+<section class="programs" id="programs">
+  <div class="programs-inner">
+    <div class="fade-in-up">
+      <div class="section-label ru">Наши программы</div>
+      <div class="section-label kk">Біздің бағдарламалар</div>
+      <h2 class="section-title">
+        <span class="ru">Найдите <em>своё направление</em></span>
+        <span class="kk">Өз <em>бағытыңызды табыңыз</em></span>
+      </h2>
+    </div>
+
+    <div class="programs-grid" style="margin-top:0">
+      <div class="program-card">
+        <div class="program-num">01</div>
+        <h3 class="ru">Подготовка к школе</h3>
+        <h3 class="kk">Мектепке дайындық</h3>
+        <p class="ru">Чтение, письмо, математика — дети приходят в первый класс уверенными и готовыми</p>
+        <p class="kk">Оқу, жазу, математика — балалар бірінші сыныпқа сенімді және дайын келеді</p>
+        <div class="program-price ru">По запросу <span>/ мес</span></div>
+        <div class="program-price kk">Сұрау бойынша <span>/ ай</span></div>
+      </div>
+      <div class="program-card">
+        <div class="program-num">02</div>
+        <h3 class="ru">Продлёнка · 1 смена</h3>
+        <h3 class="kk">Ұзартылған топ · 1 ауысым</h3>
+        <p class="ru">Комфортное время после уроков под присмотром внимательного педагога</p>
+        <p class="kk">Сабақтан кейін зейінді ұстаз қадағалауымен жайлы уақыт</p>
+        <div class="program-price ru">По запросу <span>/ мес</span></div>
+        <div class="program-price kk">Сұрау бойынша <span>/ ай</span></div>
+      </div>
+      <div class="program-card">
+        <div class="program-num">03</div>
+        <h3 class="ru">Мини-сад выходного дня</h3>
+        <h3 class="kk">Демалыс күні мини-бақшасы</h3>
+        <p class="ru">Развитие, игра и общение для малышей в уютной атмосфере</p>
+        <p class="kk">Жайлы атмосферада нәресте балалар үшін даму, ойын және қарым-қатынас</p>
+        <div class="program-price">28 000 <span>₸ / мес</span></div>
+      </div>
+      <div class="program-card">
+        <div class="program-num">04</div>
+        <h3 class="ru">Мама + малыш</h3>
+        <h3 class="kk">Ана + бала</h3>
+        <p class="ru">Совместные занятия для мамы и ребёнка — укрепляем связь и развиваем вместе</p>
+        <p class="kk">Ана мен бала үшін бірлескен сабақтар — байланысты нығайтамыз және бірге дамимыз</p>
+        <div class="program-price">28 000 <span>₸ / мес</span></div>
+      </div>
+      <div class="program-card">
+        <div class="program-num">05</div>
+        <h3 class="ru">Мастерклассы для детей</h3>
+        <h3 class="kk">Балаларға арналған шеберхана</h3>
+        <p class="ru">Творчество, воображение и радость создания — для юных мастеров</p>
+        <p class="kk">Шығармашылық, қиял және жасаудың қуанышы — жас шеберлерге</p>
+        <div class="program-price">6 000 <span>₸</span></div>
+      </div>
+      <div class="program-card">
+        <div class="program-num">06</div>
+        <h3 class="ru">Домбра для всех возрастов</h3>
+        <h3 class="kk">Барлық жастарға домбыра</h3>
+        <p class="ru">Казахский национальный инструмент — для детей и взрослых. Начните с нуля</p>
+        <p class="kk">Қазақтың ұлттық аспабы — балалар мен ересектерге. Нөлден бастаңыз</p>
+        <div class="program-price">25 000 <span>₸ / мес</span></div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:64px">
+      <a href="#contact" class="btn-primary ru">Узнать подробнее</a>
+      <a href="#contact" class="btn-primary kk">Толығырақ білу</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ REVIEWS ══ -->
+<section class="reviews">
+  <div class="reviews-inner">
+    <div class="fade-in-up">
+      <div class="section-label">
+        <span class="ru-inline">Отзывы родителей</span>
+        <span class="kk-inline">Ата-аналардың пікірлері</span>
+      </div>
+      <h2 class="section-title">
+        <span class="ru">Они уже <em>убедились</em></span>
+        <span class="kk">Олар бұған <em>көз жеткізді</em></span>
+      </h2>
+    </div>
+  </div>
+
+  <div class="reviews-track-wrap" style="margin-top:56px">
+    <div class="reviews-track" id="reviewsTrack">
+      <!-- cards duplicated for infinite scroll -->
+      <div class="review-card">
+        <div class="stars-row"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <div class="review-quote">"</div>
+        <p class="review-text ru">Ходим на продлёнку — дочери нравится, ходит с удовольствием. Первые результаты заметили через две недели. Комфортно, тепло, уютно, отношение к ребёнку трепетное.</p>
+        <p class="review-text kk">Ұзартылған топқа барамыз — қызыма ұнайды, ықыласпен барады. Екі аптадан кейін алғашқы нәтижелерді байқадық. Жайлы, жылы, нәзік қарым-қатынас.</p>
+        <div class="review-author">Жемчужина — 16 марта 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="stars-row"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <div class="review-quote">"</div>
+        <p class="review-text ru">Сначала ходили на подготовку к школе — ребёнка хорошо подтянули и многому научили. Сейчас сын ходит на продлёнку. Учителя внимательные и хорошо занимаются с детьми.</p>
+        <p class="review-text kk">Алдымен мектепке дайындыққа барды — баланы жақсы жетілдірді. Қазір ұлым ұзартылған топта. Ұстаздар зейінді және балалармен жақсы жұмыс жасайды.</p>
+        <div class="review-author">Айнур Т. — 15 марта 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="stars-row"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <div class="review-quote">"</div>
+        <p class="review-text ru">Педагог с большой буквы — подтянула моего сына, и теперь у него появился интерес к учёбе. Администратор очень быстро реагирует на просьбы. Благодарим от всей души!</p>
+        <p class="review-text kk">Ұстаз деген осы — ұлымды жетілдірді, енді оның оқуға деген ынтасы пайда болды. Әкімші өтініштерге өте жылдам жауап береді. Жан-жүрегімізбен алғыс айтамыз!</p>
+        <div class="review-author">Марсияна Д. — 8 марта 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="stars-row"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <div class="review-quote">"</div>
+        <p class="review-text ru">Очень сильный и внимательный педагог. Дочка с удовольствием посещает занятия и заметно подтянула свои слабые стороны. Очень благодарны!</p>
+        <p class="review-text kk">Өте күшті және зейінді ұстаз. Қызым сабаққа ықыласпен барады және өзінің әлсіз жерлерін айтарлықтай жетілдірді. Өте риза!</p>
+        <div class="review-author">Алтыншаш М. — 6 марта 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="stars-row"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <div class="review-quote">"</div>
+        <p class="review-text ru">Выбрали этот центр и ни разу не пожалели. Очень тёплая атмосфера. Благодаря занятиям дочь через 3 месяца научилась читать. Самое главное — она с радостью бежит на занятия.</p>
+        <p class="review-text kk">Бұл орталықты таңдадық және ешқашан өкінбедік. Сабақтардың арқасында 3 ай ішінде қызым оқуды үйренді. Ең бастысы — ол сабаққа қуана жүгіреді.</p>
+        <div class="review-author">Индира Ш. — 6 марта 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="stars-row"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <div class="review-quote">"</div>
+        <p class="review-text ru">Отдала сына в подготовительный центр вместо школы — он быстро научился читать и писать. Кроме основных предметов — дополнительные кружки по английскому и шахматам.</p>
+        <p class="review-text kk">Ұлымды мектептің орнына дайындық орталығына бердім — ол жылдам оқуды және жазуды үйренді. Негізгі пәндерден басқа — ағылшын тілі мен шахмат үйірмелері бар.</p>
+        <div class="review-author">Меруерт К. — 5 марта 2026</div>
+      </div>
+      <!-- Duplicate for loop -->
+      <div class="review-card">
+        <div class="stars-row"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <div class="review-quote">"</div>
+        <p class="review-text ru">Ходим на продлёнку — дочери нравится, ходит с удовольствием. Первые результаты заметили через две недели. Комфортно, тепло, уютно, отношение к ребёнку трепетное.</p>
+        <p class="review-text kk">Ұзартылған топқа барамыз — қызыма ұнайды. Екі аптадан кейін алғашқы нәтижелерді байқадық. Жайлы, жылы, нәзік қарым-қатынас.</p>
+        <div class="review-author">Жемчужина — 16 марта 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="stars-row"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <div class="review-quote">"</div>
+        <p class="review-text ru">Сначала ходили на подготовку к школе — ребёнка хорошо подтянули. Сейчас сын ходит на продлёнку. Учителя внимательные и хорошо занимаются с детьми.</p>
+        <p class="review-text kk">Алдымен мектепке дайындыққа барды. Қазір ұлым ұзартылған топта. Ұстаздар зейінді және балалармен жақсы жұмыс жасайды.</p>
+        <div class="review-author">Айнур Т. — 15 марта 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="stars-row"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <div class="review-quote">"</div>
+        <p class="review-text ru">Педагог с большой буквы — подтянула моего сына, и теперь у него появился интерес к учёбе. Администратор очень быстро реагирует. Благодарим!</p>
+        <p class="review-text kk">Ұстаз деген осы — ұлымды жетілдірді. Жан-жүрегімізбен алғыс айтамыз!</p>
+        <div class="review-author">Марсияна Д. — 8 марта 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="stars-row"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <div class="review-quote">"</div>
+        <p class="review-text ru">Выбрали этот центр и ни разу не пожалели. Дочь через 3 месяца научилась читать. Самое главное — она с радостью бежит на занятия.</p>
+        <p class="review-text kk">Бұл орталықты таңдадық және ешқашан өкінбедік. 3 ай ішінде қызым оқуды үйренді.</p>
+        <div class="review-author">Индира Ш. — 6 марта 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GALLERY / VIBE ══ -->
+<section class="gallery">
+  <div class="gallery-row">
+    <div class="gallery-tile">Подготовка к школе</div>
+    <div class="gallery-tile">Продлёнка</div>
+    <div class="gallery-tile">Мастерклассы</div>
+    <div class="gallery-tile">Домбыра</div>
+    <div class="gallery-tile">Мини-сад</div>
+    <div class="gallery-tile">Мама + малыш</div>
+    <div class="gallery-tile">Английский</div>
+    <div class="gallery-tile">Шахматы</div>
+    <div class="gallery-tile">Подготовка к школе</div>
+    <div class="gallery-tile">Продлёнка</div>
+    <div class="gallery-tile">Мастерклассы</div>
+    <div class="gallery-tile">Домбыра</div>
+  </div>
+  <div class="gallery-row reverse">
+    <div class="gallery-tile">Творчество</div>
+    <div class="gallery-tile">Развитие</div>
+    <div class="gallery-tile">Уют & тепло</div>
+    <div class="gallery-tile">Профессионализм</div>
+    <div class="gallery-tile">Результат</div>
+    <div class="gallery-tile">Забота</div>
+    <div class="gallery-tile">Вдохновение</div>
+    <div class="gallery-tile">Рост</div>
+    <div class="gallery-tile">Творчество</div>
+    <div class="gallery-tile">Развитие</div>
+    <div class="gallery-tile">Уют & тепло</div>
+    <div class="gallery-tile">Профессионализм</div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section class="about">
+  <div class="about-inner">
+    <div class="about-visual">
+      <div class="about-frame">
+        <div class="about-frame-inner">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <circle cx="60" cy="60" r="58" stroke="#C9A96E" stroke-width="1"/>
+            <path d="M60 20 L60 100 M20 60 L100 60" stroke="#C9A96E" stroke-width="1" stroke-dasharray="4 4"/>
+            <circle cx="60" cy="60" r="20" stroke="#C9A96E" stroke-width="1"/>
+          </svg>
+          <p style="color:rgba(201,169,110,0.3); font-family:'Cormorant Garamond',serif; font-size:16px; text-align:center; padding:20px">Ваши фото и видео<br>о жизни центра</p>
+        </div>
+      </div>
+      <div class="about-accent"></div>
+      <div class="about-accent-2"></div>
+    </div>
+
+    <div class="about-text fade-in-up">
+      <div class="section-label">
+        <span class="ru-inline">О центре</span>
+        <span class="kk-inline">Орталық туралы</span>
+      </div>
+      <h2 class="section-title">
+        <span class="ru">Мы <em>с 2019 года</em> рядом с вашей семьёй</span>
+        <span class="kk"><em>2019 жылдан</em> бері отбасыңызбен бірге</span>
+      </h2>
+      <p class="ru">Fly High — это не просто учебный центр. Это пространство, где дети чувствуют себя в безопасности, родители — уверенными, а педагоги — востребованными. Мы создаём атмосферу, в которой обучение становится удовольствием.</p>
+      <p class="kk">Fly High — бұл жай ғана оқу орталығы емес. Бұл балалар өзін қауіпсіз сезінетін, ата-аналар сенімді болатын, ал ұстаздар сұранысқа ие болатын кеңістік.</p>
+      <p class="ru" style="margin-top:16px">Расположены в Есильском районе Астаны, работаем каждый день с 08:30 до 19:30. Всегда рады новым семьям.</p>
+      <p class="kk" style="margin-top:16px">Астанадағы Есіл ауданында орналасқанбыз, күн сайын 08:30-дан 19:30-ға дейін жұмыс жасаймыз. Жаңа отбасыларды әрқашан қуана күтеміз.</p>
+
+      <div class="about-stats">
+        <div>
+          <div class="stat-num">6+</div>
+          <div class="stat-label ru">лет опыта</div>
+          <div class="stat-label kk">жыл тәжірибе</div>
+        </div>
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label ru">программ</div>
+          <div class="stat-label kk">бағдарлама</div>
+        </div>
+        <div>
+          <div class="stat-num">5.0</div>
+          <div class="stat-label ru">рейтинг</div>
+          <div class="stat-label kk">рейтинг</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-label">
+        <span class="ru-inline">Запишитесь сейчас</span>
+        <span class="kk-inline">Қазір жазылыңыз</span>
+      </div>
+      <h2 class="section-title">
+        <span class="ru">Начните <em>уже сегодня</em></span>
+        <span class="kk"><em>Бүгін бастаңыз</em></span>
+      </h2>
+
+      <div class="contact-form" style="margin-top:48px">
+        <div class="form-row">
+          <div class="form-field">
+            <label class="ru-inline">Ваше имя</label>
+            <label class="kk-inline">Есіміңіз</label>
+            <input type="text" placeholder="Анна">
+          </div>
+          <div class="form-field">
+            <label class="ru-inline">Телефон</label>
+            <label class="kk-inline">Телефон</label>
+            <input type="tel" placeholder="+7 777 000 00 00">
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="ru-inline">Программа</label>
+          <label class="kk-inline">Бағдарлама</label>
+          <select>
+            <option class="ru" value="">Выберите программу...</option>
+            <option class="kk" value="">Бағдарлама таңдаңыз...</option>
+            <option value="school">Подготовка к школе / Мектепке дайындық</option>
+            <option value="after">Продлёнка / Ұзартылған топ</option>
+            <option value="garden">Мини-сад выходного дня</option>
+            <option value="mom">Мама + малыш / Ана + бала</option>
+            <option value="craft-kids">Мастерклассы для детей</option>
+            <option value="craft-adults">Мастерклассы для взрослых</option>
+            <option value="dombra">Домбыра</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="ru-inline">Сообщение (необязательно)</label>
+          <label class="kk-inline">Хабарлама (міндетті емес)</label>
+          <textarea placeholder="..."></textarea>
+        </div>
+        <button class="form-submit" onclick="handleSubmit(event)">
+          <span class="ru-inline">Отправить заявку</span>
+          <span class="kk-inline">Өтінімді жіберу</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="contact-info">
+      <div class="section-label">
+        <span class="ru-inline">Контакты</span>
+        <span class="kk-inline">Байланыс</span>
+      </div>
+
+      <div class="info-block">
+        <div class="info-block-label ru-inline">Адрес</div>
+        <div class="info-block-label kk-inline">Мекен-жай</div>
+        <div class="info-block-value">
+          Керей, Жанибек хандар к-сі, 151<br>
+          <span style="font-size:14px; color:var(--muted)">Есіл ауданы, Астана</span>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-block-label ru-inline">Часы работы</div>
+        <div class="info-block-label kk-inline">Жұмыс уақыты</div>
+        <div class="info-block-value">
+          <span class="ru">Пн — Пт · 08:30 — 19:30</span>
+          <span class="kk">Дс — Жм · 08:30 — 19:30</span>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-block-label ru-inline">Телефоны</div>
+        <div class="info-block-label kk-inline">Телефондар</div>
+        <div class="info-block-value">
+          <a href="tel:+77761671868">+7 776 167 18 68</a><br>
+          <a href="tel:+77715362093">+7 771 536 20 93</a>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-block-label">Email</div>
+        <div class="info-block-value">
+          <a href="mailto:flyhigh2019@mail.ru">flyhigh2019@mail.ru</a>
+        </div>
+      </div>
+
+      <div class="social-row">
+        <a href="https://www.instagram.com/flyhigh_centre" target="_blank" class="social-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+        <a href="https://wa.me/77761671868" target="_blank" class="social-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://t.me/+77761671868" target="_blank" class="social-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+          Telegram
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">Fly <span>High</span></div>
+  <div class="footer-copy ru">
+    © 2019 — 2026 Fly High · Астана · Есіл ауданы
+  </div>
+  <div class="footer-copy kk">
+    © 2019 — 2026 Fly High · Астана · Есіл ауданы
+  </div>
+</footer>
+
+<script>
+// ── Language switching ──
+function setLang(lang) {
+  document.body.classList.remove('lang-ru', 'lang-kk');
+  document.body.classList.add('lang-' + lang);
+  document.getElementById('btnRu').classList.toggle('active', lang === 'ru');
+  document.getElementById('btnKk').classList.toggle('active', lang === 'kk');
+  document.documentElement.lang = lang === 'kk' ? 'kk' : 'ru';
+}
+
+// ── Scroll effects ──
+const langBar = document.getElementById('langBar');
+window.addEventListener('scroll', () => {
+  langBar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── Intersection observer for animations ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in-up, .feature-card, .program-card').forEach(el => {
+  observer.observe(el);
+});
+
+// Stagger program & feature cards
+document.querySelectorAll('.feature-card').forEach((card, i) => {
+  card.style.transitionDelay = (i * 0.1) + 's';
+});
+document.querySelectorAll('.program-card').forEach((card, i) => {
+  card.style.transitionDelay = (i * 0.08) + 's';
+});
+
+// ── Form submit handler ──
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target;
+  btn.style.background = '#4CAF88';
+  btn.innerHTML = '<span style="color:#fff">✓</span>';
+  setTimeout(() => {
+    btn.style.background = '';
+    const isRu = document.body.classList.contains('lang-ru');
+    btn.innerHTML = isRu
+      ? '<span class="ru-inline">Отправить заявку</span><span class="kk-inline">Өтінімді жіберу</span>'
+      : '<span class="ru-inline">Отправить заявку</span><span class="kk-inline">Өтінімді жіберу</span>';
+  }, 2500);
+}
+</script>
+</body>
+</html>
